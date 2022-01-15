@@ -3,7 +3,7 @@
 #### Exercises mobile infographic player using options for theme
 
 
-Requires a valid username/token in the index.html.  Add those first.
+Requires a valid username/token in the index.html.  Add those first. (index.html #170)
 Update the player URL to your own debug player url.
 
 **Run these commands:**
