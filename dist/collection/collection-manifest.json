@@ -1,0 +1,48 @@
+{
+  "components": [
+    {
+      "tag": "x-toggle-button",
+      "dependencies": [],
+      "componentClass": "ToggleButton",
+      "componentPath": "components/my-component/x-toggle-button.js",
+      "styles": {
+        "$": {
+          "stylePaths": [
+            "components/my-component/x-toggle-button.css"
+          ]
+        }
+      },
+      "props": [
+        {
+          "name": "checked",
+          "type": "Boolean",
+          "mutable": true,
+          "attr": "checked"
+        },
+        {
+          "name": "checkedColor",
+          "type": "String",
+          "attr": "checked-color"
+        },
+        {
+          "name": "type",
+          "type": "String",
+          "attr": "type"
+        },
+        {
+          "name": "uncheckedColor",
+          "type": "String",
+          "attr": "unchecked-color"
+        }
+      ],
+      "shadow": true
+    }
+  ],
+  "collections": [],
+  "compiler": {
+    "name": "@stencil/core",
+    "version": "0.11.0",
+    "typescriptVersion": "2.9.2"
+  },
+  "bundles": []
+}

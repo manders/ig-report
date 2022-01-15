@@ -1,0 +1,23 @@
+{
+    "name": "ig-report",
+    "version": "1.0.0",
+    "description": "Exercises mobile infographic player using options for theme",
+    "main": "index.js",
+    "scripts": {
+        "start": "lite-server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/manders/ig-report.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/manders/ig-report/issues"
+    },
+    "homepage": "https://github.com/manders/ig-report#readme",
+    "devDependencies": {
+        "lite-server": "^2.6.1"
+    }
+}
