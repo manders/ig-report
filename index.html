@@ -117,6 +117,10 @@
             <x-toggle-button id="toggleShowClose" type="round" checked="true" checked-color="#23B036" unchecked-color="#d4d4d4"></x-toggle-button>
             <label class="label-right" for="toggleShowClose">Show Close Button</label>
         </div>
+        <div class="switch">
+            <x-toggle-button id="toggleStack" type="round" checked="false" checked-color="#23B036" unchecked-color="#d4d4d4"></x-toggle-button>
+            <label class="label-right" for="toggleStack">Show Stacked</label>
+        </div>
         <div class="group">
             <p>Export Options</p>
             <div class="switch">
@@ -147,10 +151,6 @@
                 <label class="label-right" for="inputBG">Background color</label>
             </div>
             <div class="color">
-                <input id="inputTC" />
-                <label class="label-right" for="inputTC">Text color</label>
-            </div>
-            <div class="color">
                 <input id="inputHBG" />
                 <label class="label-right" for="inputHBG">Header Background</label>
             </div>
@@ -166,23 +166,24 @@
         var _settings = {
             iframeId: "myIframe",
 
-            username: "<your ArcGIS username>",
-            token: "<your valid ArcGIS token>",
+            username: "mark_ba",
+            token: "3trzp6RTAiYJwAK0Y59Zt1sYc8v4wGqw-upWrMZJQOxOc2TlC8K5CXTD4WQ9L9a47cq_G7bUvuIs6Mpv2N0i3MbadQtvPOG-4V_tz3nK61RWp3eD_4Eb5Y98c1adWfEeccJDKTudTpZRRJoQPmegS-f49uqJHFu-2mTxZGY06_0dVZ1B_U_tuDdPsTzuA3tybUS2IPU8n6O8TJ8nk4QVFvWPSnYH1jD3-u_3MmXXl_I.",
 
             reportId: "b737042ee11d4d19ba938a3ca333e673",
             latitude: "34",
             longitude: "-117",
-            playerUrl: "https://bao.arcgis.com/InfographicsPlayer/BAMobile/9.4/reportPlayer/ReportPlayerMobile.html",
+            playerUrl: "https://bao.arcgis.com/InfographicsPlayer/BAMobile/10.1/reportPlayer/ReportPlayerMobile.html",
             options: null,
         };
 
-        // pull options from UI
-        var _getOptions = function() {
+        // pull options from UI into object string
+        var _addOptions = function() {
+            var str = "";
             function getBoolean(id) {
-                let result = false;
+                let result = "false";
                 let elem = document.getElementById(id);
                 if (elem) {
-                    result = (elem.checked);
+                    result = (elem.checked).toString();
                 }
                 return result;
             }
@@ -195,29 +196,27 @@
                 }
                 return false;
             }
-
-            let obj = {
-                // "longitude": _settings.longitude,
-                // "latitude": _settings.latitude,
-                // "countryCode": "US",
-                "showHeader": getBoolean('toggleShowHeader'),
-                "showCloseButton": getBoolean('toggleShowClose'),
-                "exportOptions": {
-                    "print": getBoolean('togglePrint'),
-                    "image": getBoolean('toggleImage'),
-                    "pdf": getBoolean('togglePDF'),
-                    "dynamicHtml": getBoolean('toggleDynamic')
-                }
-            };
+            str += '"showHeader":' + getBoolean('toggleShowHeader') + ',';
+            str += '"showCloseButton":' + getBoolean('toggleShowClose') + ',';
+            let stacked = getBoolean('toggleStack');
+            if (stacked == 'true'){
+                str += '"viewMode":"panels-in-stack","resizeMode":"auto",';
+            }
+            str += '"exportOptions": {' +
+                    '"print":' + getBoolean('togglePrint') + ',' + 
+                    '"image":' + getBoolean('toggleImage') + ',' + 
+                    '"pdf":' + getBoolean('togglePDF') + ',' +
+                    '"dynamicHtml":' + getBoolean('toggleDynamic') +
+                '}';
+            // theme object
             let themeColors = {};
             let a = addColor(themeColors, "background", 'inputBG');
-            let b = addColor(themeColors, "text", 'inputTC');
-            let c = addColor(themeColors, "headerBackground", 'inputHBG');
-            let d = addColor(themeColors, "headerText", 'inputHTC');
-            if (a || b || c || d) {
-                obj["theme"] = themeColors;
+            let b = addColor(themeColors, "headerBackground", 'inputHBG');
+            let c = addColor(themeColors, "headerText", 'inputHT');
+            if (a || b || c) {
+                str+= ',"theme":' +  JSON.stringify(themeColors);
             }
-            return JSON.stringify(obj);
+            return str;
         }
 
         var _createIframe = function() {
@@ -235,8 +234,8 @@
                 '"reportID": "' + _settings.reportId + '",' +
                 '"countryID": "US",' +
                 '"hierarchy": "census",' +
-                '"analysisAreas": ' + JSON.stringify(areas) + ',' +
-                '"options": ' + _getOptions() + ' }';
+                '"analysisAreas": ' + JSON.stringify(areas) + ',';
+            params += _addOptions() + ' }';
 
             console.log('PARAMS=', params);
 
