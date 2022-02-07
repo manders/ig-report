@@ -11,6 +11,6 @@ Update the player URL to your own debug player url.
 >    npm install;
    npm start
 
-<img width="824" alt="image" src="https://user-images.githubusercontent.com/4062792/152842922-133368bb-2ccd-4557-8284-435695b93038.png">
+<img width="824" alt="image" src="https://user-images.githubusercontent.com/4062792/152843064-b0ab37f7-52d7-49d7-b922-afee3bd7a992.png">
 
 Set options and click *Apply*
